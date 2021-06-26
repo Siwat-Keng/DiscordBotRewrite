@@ -1,0 +1,37 @@
+{
+  "name": "uncle_bot_upgrade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "clean": "mkdir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "npm run clean && npm run build-babel && cp -R src/locales build/",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "start": "node ./build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "7.14.*",
+    "@babel/core": "7.14.*",
+    "@babel/node": "7.14.*",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "7.14.*",
+    "eslint": "7.29.*",
+    "eslint-config-google": "0.14.*",
+    "eslint-plugin-jest": "24.3.*",
+    "jest": "27.0.*",
+    "nodemon": "2.0.*"
+  },
+  "dependencies": {
+    "axios": "0.21.*",
+    "discord.js": "12.5.*",
+    "dotenv": "10.0.*",
+    "luxon": "1.27.*",
+    "mongoose": "5.12.*",
+    "string-similarity": "4.0.*"
+  }
+}
