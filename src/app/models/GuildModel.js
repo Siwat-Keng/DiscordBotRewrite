@@ -6,12 +6,12 @@ const GuildSchema = new mongoose.Schema({
     guild_id: {
         type: String,
         require: true,
+        unique: true,
     },
-    prefix: { 
-        type: String, 
+    prefix: {
+        type: String,
         default: process.env.DEFAULT_PREFIX,
         require: true,
-        unique: true,
     },
     alert_channel_id: {
         type: String,
@@ -19,7 +19,7 @@ const GuildSchema = new mongoose.Schema({
     intro_channel_id: {
         type: String,
     },
-    command_channel_id:{
+    command_channel_id: {
         type: String,
     },
     timezone: {

@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 import 'dotenv/config'
 
 const getCurrentDateTime = ({ zone } = { zone: process.env.DEFAULT_TIMEZONE }) => {
-    console.log(zone)
     return DateTime.local().setZone(zone)
 }
 

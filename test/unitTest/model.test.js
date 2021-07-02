@@ -9,15 +9,14 @@ describe('Guild Model Test', () => {
     const mockGuild = {
         guild_id: '9999999',
         prefix: '#',
-        timezone:'mockTimezone',
-        alert_channel_id:'alert_channel_id',
-        intro_channel_id:'intro_channel_id',
-        command_channel_id:'command_channel_id',
+        timezone: 'mockTimezone',
+        alert_channel_id: 'alert_channel_id',
+        intro_channel_id: 'intro_channel_id',
+        command_channel_id: 'command_channel_id',
     }
 
-    beforeAll(async () => {
-       
-        await mongoose.connect(`${process.env.MONGODB_URI}/${process.env.MONGODB_DB}?${process.env.MONGODB_OPTION}`, {
+    beforeAll(() => {
+        mongoose.connect(`${process.env.MONGODB_URI}/${process.env.MONGODB_DB}?${process.env.MONGODB_OPTION}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: true,
@@ -26,25 +25,21 @@ describe('Guild Model Test', () => {
 
     })
 
-    afterEach(async () => 
-
-        await Guild.Model.deleteOne({ guild_id: mockGuild.guild_id }),
-
+    afterEach(() =>
+        Guild.Model.deleteOne({ guild_id: mockGuild.guild_id }),
     )
 
-    afterAll(() => 
-        
+    afterAll(() =>
         mongoose.connection.close(),
-        
     )
-    
+
     it('Create New Guild success', async () => {
         await Guild.Model(mockGuild).save()
         const result = await Guild.Model.findOne({ guild_id: mockGuild.guild_id }).lean()
-        
+
         expect(result).toMatchObject(mockGuild)
     })
-  
+
     it('Remove Guild success', async () => {
         await Guild.Model(mockGuild).save()
         await Guild.Model.deleteOne({ guild_id: mockGuild.guild_id })

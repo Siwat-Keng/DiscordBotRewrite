@@ -27,11 +27,11 @@
     "nodemon": "2.0.*"
   },
   "dependencies": {
-    "axios": "0.21.*",
     "discord.js": "12.5.*",
     "dotenv": "10.0.*",
     "luxon": "1.27.*",
     "mongoose": "5.12.*",
+    "node-fetch": "2.6.*",
     "string-similarity": "4.0.*"
   }
 }

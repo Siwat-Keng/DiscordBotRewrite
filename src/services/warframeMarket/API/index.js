@@ -1,4 +1,4 @@
-import axios from 'axios'
+import fetch from 'node-fetch'
 import stringSimilarity from 'string-similarity'
 
 const BASE_PRICE_API_URL = 'https://api.warframe.market/v1/items/'
@@ -6,7 +6,9 @@ const BASE_USER_URL = 'https://warframe.market/items/'
 const BASE_ITEM_API_URL = 'https://api.warframe.market/v1/'
 
 const getItems = () =>
-    axios.get(BASE_ITEM_API_URL + 'items').then((response) => response.data.payload.items)
+    fetch(`${BASE_ITEM_API_URL}items`)
+        .then(response => response.json())
+        .then(body => body.payload.items)
 
 const getClosestMatchItem = (name) => {
     let bestMatchItem
@@ -15,9 +17,9 @@ const getClosestMatchItem = (name) => {
         items.map((item) => {
             if (
                 stringSimilarity.compareTwoStrings(name, item.item_name) >=
-      stringSimilarity.compareTwoStrings(name, item.url_name) &&
-    stringSimilarity.compareTwoStrings(name, item.item_name) >
-      bestMatchScore
+                stringSimilarity.compareTwoStrings(name, item.url_name) &&
+                stringSimilarity.compareTwoStrings(name, item.item_name) >
+                bestMatchScore
             ) {
                 bestMatchItem = item
                 bestMatchScore = stringSimilarity.compareTwoStrings(
@@ -26,8 +28,8 @@ const getClosestMatchItem = (name) => {
                 )
             } else if (
                 stringSimilarity.compareTwoStrings(name, item.url_name) >
-      stringSimilarity.compareTwoStrings(name, item.item_name) &&
-    stringSimilarity.compareTwoStrings(name, item.url_name) > bestMatchScore
+                stringSimilarity.compareTwoStrings(name, item.item_name) &&
+                stringSimilarity.compareTwoStrings(name, item.url_name) > bestMatchScore
             ) {
                 bestMatchItem = item
                 bestMatchScore = stringSimilarity.compareTwoStrings(
@@ -41,15 +43,11 @@ const getClosestMatchItem = (name) => {
 }
 
 const getPriceData = (name) =>
-    getClosestMatchItem(name).then((item) =>
-        axios
-            .get(`${BASE_PRICE_API_URL}${item.url_name}/orders`, {
-                params: { include: 'item' },
-            })
-            .then((response) => {
-                const orders = response.data.payload.orders.filter(
-                    (item) => item.user.status === 'ingame',
-                )
+    getClosestMatchItem(name).then(item =>
+        fetch(`${BASE_PRICE_API_URL}${item.url_name}/orders?include=item`)
+            .then(response => response.json())
+            .then(order => {
+                const orders = order.filter(item => item.user.status === 'ingame')
                 let priceData = {}
                 priceData.itemName = item.item_name
                 priceData.url = `${BASE_USER_URL}${item.url_name}`
@@ -78,7 +76,6 @@ const getPriceData = (name) =>
                     })
                 })
                 return priceData
-            }),
-    )
+            }))
 
 module.exports = { getPriceData }
