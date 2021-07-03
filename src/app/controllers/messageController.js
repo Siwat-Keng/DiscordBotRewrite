@@ -1,6 +1,12 @@
 import Member from '../models/MemberModel'
 import Guild from '../models/GuildModel'
+
+import { getPriceEmbed } from '../../services/warframeMarket'
+
 import { checkSentence } from '../../libs/introduceChecker'
+import { warframeMarketFooter } from '../../libs/setFooter'
+import { addWarframeMarketReaction, warframeMarketReaction } from '../../libs/handleReaction'
+
 import response from '../../locales/response.json'
 import reaction from '../../locales/reaction.json'
 
@@ -44,7 +50,23 @@ const introduceCheck = async message => {
 
 const help = () => console.log('help')
 
-const priceCheck = () => console.log('warframe market')
+const priceCheck = async (message) => {
+    const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
+    const args = message.content.slice(guildData.prefix.length).trim().split(' ')
+    args.shift()
+    const waitingMessage = await message.channel.send(response.loading.message)
+    const priceEmbed = await getPriceEmbed(args.join(' '))
+    priceEmbed.sell = warframeMarketFooter({ embed: priceEmbed.sell, guild: message.guild})
+    priceEmbed.buy = warframeMarketFooter({ embed: priceEmbed.buy, guild: message.guild})
+    waitingMessage.delete()
+    const sellerMessage = await message.channel.send({ embed: priceEmbed.sell })
+    const buyerMessage = await message.channel.send({ embed: priceEmbed.buy })
+    addWarframeMarketReaction(sellerMessage, priceEmbed.sell.maxRank !== -1)
+    addWarframeMarketReaction(buyerMessage, priceEmbed.buy.maxRank !== -1)
+    warframeMarketReaction(sellerMessage, priceEmbed.sell)
+    warframeMarketReaction(buyerMessage, priceEmbed.buy)
+    await message.react(reaction.success)
+}
 
 const getBuild = () => console.log('get build')
 

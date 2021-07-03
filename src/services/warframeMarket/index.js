@@ -1,4 +1,4 @@
-import getPriceData from './API'
+import { getPriceData } from './API'
 
 const BUY_TYPE = 0
 const SELL_TYPE = 1

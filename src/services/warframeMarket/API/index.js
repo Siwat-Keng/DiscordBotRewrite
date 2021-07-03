@@ -47,7 +47,7 @@ const getPriceData = (name) =>
         fetch(`${BASE_PRICE_API_URL}${item.url_name}/orders?include=item`)
             .then(response => response.json())
             .then(order => {
-                const orders = order.filter(item => item.user.status === 'ingame')
+                const orders = order.payload.orders.filter(item => item.user.status === 'ingame')
                 let priceData = {}
                 priceData.itemName = item.item_name
                 priceData.url = `${BASE_USER_URL}${item.url_name}`

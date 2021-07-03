@@ -12,5 +12,8 @@
                 "description": "description s"
             }
         }
+    },
+    "loading": {
+        "message": "`Loading...`"
     }
 }
