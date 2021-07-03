@@ -2,6 +2,7 @@ import Member from '../models/MemberModel'
 import Guild from '../models/GuildModel'
 
 import { getPriceEmbed } from '../../services/warframeMarket'
+import { getBuildMessage } from '../../services/warframeBuild'
 
 import { checkSentence } from '../../libs/introduceChecker'
 import { warframeMarketFooter } from '../../libs/setFooter'
@@ -50,7 +51,7 @@ const introduceCheck = async message => {
 
 const help = () => console.log('help')
 
-const priceCheck = async (message) => {
+const priceCheck = async message => {
     const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
     const args = message.content.slice(guildData.prefix.length).trim().split(' ')
     args.shift()
@@ -68,6 +69,15 @@ const priceCheck = async (message) => {
     await message.react(reaction.success)
 }
 
-const getBuild = () => console.log('get build')
+const getBuild = async message => {
+    const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
+    const args = message.content.slice(guildData.prefix.length).trim().split(' ')
+    args.shift()
+    const waitingMessage = await message.channel.send(response.loading.message)
+    const buildsEmbed = await getBuildMessage(args.join(' '))
+    await waitingMessage.delete()
+    buildsEmbed.map( async build => await message.channel.send({ embed: build }))
+    await message.react(reaction.success)
+}
 
 module.exports = { introduceCheck, help, priceCheck, getBuild }
