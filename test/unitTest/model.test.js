@@ -10,9 +10,11 @@ describe('Guild Model Test', () => {
         guild_id: '9999999',
         prefix: '#',
         timezone: 'mockTimezone',
-        alert_channel_id: 'alert_channel_id',
-        intro_channel_id: 'intro_channel_id',
-        command_channel_id: 'command_channel_id',
+        channels: {
+            alert_channel_id: 'alert_channel_id',
+            intro_channel_id: 'intro_channel_id',
+            command_channel_id: 'command_channel_id',
+        },
     }
 
     beforeAll(() => {
