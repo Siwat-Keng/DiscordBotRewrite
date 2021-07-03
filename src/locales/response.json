@@ -15,5 +15,11 @@
     },
     "loading": {
         "message": "`Loading...`"
+    },
+    "help": {
+        "embed": {
+            "title": "title help",
+            "description": "description help"
+        }
     }
 }

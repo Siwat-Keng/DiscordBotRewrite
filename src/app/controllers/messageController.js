@@ -4,7 +4,7 @@ import Guild from '../models/GuildModel'
 import { getPriceEmbed } from '../../services/warframeMarket'
 import { getBuildMessage } from '../../services/warframeBuild'
 
-import { checkSentence } from '../../libs/introduceChecker'
+import { checkSentence } from '../../libs/introduceCheck'
 import { warframeMarketFooter } from '../../libs/setFooter'
 import { addWarframeMarketReaction, warframeMarketReaction } from '../../libs/handleReaction'
 
@@ -49,7 +49,7 @@ const introduceCheck = async message => {
     }
 }
 
-const help = () => console.log('help')
+const help = async message => await message.author.send({ embed: response.help.embed })
 
 const priceCheck = async message => {
     const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()

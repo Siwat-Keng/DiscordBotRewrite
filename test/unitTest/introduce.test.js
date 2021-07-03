@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { checkSentence } from '../../src/libs/introduceChecker'
+import { checkSentence } from '../../src/libs/introduceCheck'
 
 describe('Introduce Test', () => {
 

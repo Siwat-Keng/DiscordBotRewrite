@@ -1,6 +1,6 @@
-import { getTimeStamp } from '../timer'
+import { getTimeStamp } from '../libs/timer'
 import stringSimilarity from 'string-similarity'
-import wordListed from '../../locales/format.json'
+import wordListed from '../locales/format.json'
 
 const splitter = /[: ]+/
 
