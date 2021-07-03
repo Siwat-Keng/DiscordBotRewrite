@@ -8,6 +8,6 @@ const memberJoin = async member => {
     else if (guildData.channels.intro_channel_id && memberData) console.log('welcome back sir!')
 }
 
-const memberLeave = member => console.log(`${member.displayName}(${member.id}) left ${member.guild.name} server.`)
+const memberLeave = member => console.log(`${member.user.tag}(${member.id}) left ${member.guild.name} server.`)
 
 module.exports = { memberJoin, memberLeave }

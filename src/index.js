@@ -17,15 +17,13 @@ const main = async () => {
 
     const client = new Client()
 
-    client.on('ready', () => {
-        console.log(`Logged in as ${client.user.tag}!`)
-    })
+    client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`))
 
     client.on('message', async message => {
         const guildData = await messageHandler.messageCheck(message)
         if (!guildData) return
-        if (message.channel.id === guildData.channels.intro_channel_id) return messageController.introduceCheck(message)
-        if (message.content.startsWith(guildData.prefix) && (!guildData.channels.command_channel_id || guildData.channels.command_channel_id === message.channel.id)) {
+        if (message.channel.id === guildData.channels?.intro_channel_id) return messageController.introduceCheck(message)
+        if (message.content.startsWith(guildData.prefix) && (!guildData.channels?.command_channel_id || guildData.channels?.command_channel_id === message.channel.id)) {
             const args = message.content.slice(guildData.prefix.length).trim().split(' ')
             const command = args.shift().toLowerCase()
             if (command === 'help') return messageController.help(message)

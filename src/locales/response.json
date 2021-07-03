@@ -1,0 +1,16 @@
+{
+    "introduce": {
+        "fail": {
+            "embed": {
+                "title": "title e",
+                "description": "description e"
+            }
+        },
+        "success": {
+            "embed": {
+                "title": "title s",
+                "description": "description s"
+            }
+        }
+    }
+}
