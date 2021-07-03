@@ -80,4 +80,6 @@ const getBuild = async message => {
     await message.react(reaction.success)
 }
 
-module.exports = { introduceCheck, help, priceCheck, getBuild }
+const getMember = async message => console.log(message.content)
+
+module.exports = { introduceCheck, help, priceCheck, getBuild, getMember }
