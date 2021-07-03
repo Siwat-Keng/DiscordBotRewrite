@@ -13,14 +13,24 @@ const GuildSchema = new mongoose.Schema({
         default: process.env.DEFAULT_PREFIX,
         require: true,
     },
-    alert_channel_id: {
-        type: String,
+    channels: {
+        alert_channel_id: {
+            type: String,
+        },
+        intro_channel_id: {
+            type: String,
+        },
+        command_channel_id: {
+            type: String,
+        },
     },
-    intro_channel_id: {
-        type: String,
-    },
-    command_channel_id: {
-        type: String,
+    roles: {
+        waiting_intro_id: {
+            type: String,
+        },
+        member_id: {
+            type:String,
+        },
     },
     timezone: {
         type: String,

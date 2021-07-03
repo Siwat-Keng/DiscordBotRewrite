@@ -24,8 +24,8 @@ const main = async () => {
     client.on('message', async message => {
         const guildData = await messageHandler.messageCheck(message)
         if (!guildData) return
-        if (message.channel.id === guildData.intro_channel_id) return messageController.introduceCheck(message)
-        if (message.content.startsWith(guildData.prefix) && (!guildData.command_channel_id || guildData.command_channel_id === message.channel.id)) {
+        if (message.channel.id === guildData.channels.intro_channel_id) return messageController.introduceCheck(message)
+        if (message.content.startsWith(guildData.prefix) && (!guildData.channels.command_channel_id || guildData.channels.command_channel_id === message.channel.id)) {
             const args = message.content.slice(guildData.prefix.length).trim().split(' ')
             const command = args.shift().toLowerCase()
             if (command === 'help') return messageController.help(message)
