@@ -20,7 +20,7 @@ const splitSentence = (string) => {
                 bestMatchWord = word
             }
         })
-        result[bestMatchWord] = splitted.slice(1).join(' ')
+        result[bestMatchWord] = escape(splitted.slice(1).join(' '))
     })
     return result
 }

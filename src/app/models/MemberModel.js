@@ -31,7 +31,7 @@ const MemberSchema = new mongoose.Schema({
     timestamps: true,
 })
 
-MemberSchema.index({ guild_id: 1, member_id: 1 })
+MemberSchema.index({ guild_id: 1, member_tag: 1 })
 
 const member = mongoose.model('Member', MemberSchema)
 

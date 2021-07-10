@@ -5,8 +5,9 @@ import { getPriceEmbed } from '../../services/warframeMarket'
 import { getBuildMessage } from '../../services/warframeBuild'
 
 import { checkSentence } from '../../libs/introduceCheck'
-import { warframeMarketFooter } from '../../libs/setFooter'
+import { warframeMarketFooter, setIcon } from '../../libs/setFooter'
 import { addWarframeMarketReaction, warframeMarketReaction } from '../../libs/handleReaction'
+import { memberEmbed } from '../../libs/buildEmbed'
 
 import response from '../../locales/response.json'
 import reaction from '../../locales/reaction.json'
@@ -20,7 +21,7 @@ const introduceCheck = async message => {
             memberData.in_game_name = result.Ign
             memberData.age = result.Age
             memberData.clan = result.Clan
-            memberData.member_tag = message.author.tag
+            memberData.member_tag = escape(message.author.tag)
             await Member.Model.updateOne({ member_id: message.author.id, guild_id: message.guild.id }, memberData)
         } else {
             await Member.Model({
@@ -30,7 +31,7 @@ const introduceCheck = async message => {
                 in_game_name: result.Ign,
                 age: result.Age,
                 clan: result.Clan,
-                member_tag: message.author.tag,
+                member_tag: escape(message.author.tag),
             }).save()
         }
         const guildData = await Guild.Model.findOne({ guild_id:message.guild.id }).lean()
@@ -90,6 +91,18 @@ const getBuild = async message => {
     await message.react(reaction.success)
 }
 
-const getMember = async message => console.log(message.content)
+const getMember = async message => {
+    const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
+    const args = message.content.slice(guildData.prefix.length).trim().split(' ')
+    args.shift()
+    const members = await Member.Model.find({ guild_id: message.guild.id, member_tag: escape(args.join(' '))}).lean()
+    members.map(member => message.channel.send({ 
+        embed: setIcon({
+            embed: memberEmbed(member),
+            guild: message.guild,
+        }),
+    }))
+    await message.react(reaction.success)
+}
 
 module.exports = { introduceCheck, help, priceCheck, getBuild, getMember }
