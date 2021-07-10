@@ -12,7 +12,7 @@ const getItems = () =>
 
 const getClosestMatchItem = (name) => {
     let bestMatchItem
-    let bestMatchScore = -Infinity
+    let bestMatchScore = 0.3
     return getItems().then((items) => {
         items.map((item) => {
             if (

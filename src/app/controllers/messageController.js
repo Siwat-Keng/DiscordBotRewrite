@@ -49,24 +49,34 @@ const introduceCheck = async message => {
     }
 }
 
-const help = async message => await message.author.send({ embed: response.help.embed })
+const help = message => message.author
+    .send({ embed: response.help.embed })
+    .catch(() => message.channel.send({ embed: response.help.embed }))
+    .finally(() => message.react(reaction.success))
+
 
 const priceCheck = async message => {
     const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
     const args = message.content.slice(guildData.prefix.length).trim().split(' ')
     args.shift()
     const waitingMessage = await message.channel.send(response.loading.message)
-    const priceEmbed = await getPriceEmbed(args.join(' '))
-    priceEmbed.sell = warframeMarketFooter({ embed: priceEmbed.sell, guild: message.guild})
-    priceEmbed.buy = warframeMarketFooter({ embed: priceEmbed.buy, guild: message.guild})
-    waitingMessage.delete()
-    const sellerMessage = await message.channel.send({ embed: priceEmbed.sell })
-    const buyerMessage = await message.channel.send({ embed: priceEmbed.buy })
-    addWarframeMarketReaction(sellerMessage, priceEmbed.sell.maxRank !== -1)
-    addWarframeMarketReaction(buyerMessage, priceEmbed.buy.maxRank !== -1)
-    warframeMarketReaction(sellerMessage, priceEmbed.sell)
-    warframeMarketReaction(buyerMessage, priceEmbed.buy)
-    await message.react(reaction.success)
+    try {
+        const priceEmbed = await getPriceEmbed(args.join(' '))
+        priceEmbed.sell = warframeMarketFooter({ embed: priceEmbed.sell, guild: message.guild})
+        priceEmbed.buy = warframeMarketFooter({ embed: priceEmbed.buy, guild: message.guild})
+        waitingMessage.delete()
+        const sellerMessage = await message.channel.send({ embed: priceEmbed.sell })
+        const buyerMessage = await message.channel.send({ embed: priceEmbed.buy })
+        addWarframeMarketReaction(sellerMessage, priceEmbed.sell.maxRank !== -1)
+        addWarframeMarketReaction(buyerMessage, priceEmbed.buy.maxRank !== -1)
+        warframeMarketReaction(sellerMessage, priceEmbed.sell)
+        warframeMarketReaction(buyerMessage, priceEmbed.buy)
+        await message.react(reaction.success)
+    } catch (err) {
+        console.error(err)
+        waitingMessage.delete()
+        message.react(reaction.fail)
+    }
 }
 
 const getBuild = async message => {
