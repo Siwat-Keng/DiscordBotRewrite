@@ -11,6 +11,31 @@
                 "title": "title s",
                 "description": "description s"
             }
+        },
+        "require": {
+            "title": "Welcome {{member.display_name}}!",
+            "description": "อย่าลืมแนะนำตัวในห้อง {{intro_channel.name}} ตามตัวอย่างในรูปนะครับ",
+            "fields": [
+                {
+                    "name": "สามารถ Copy ไปเติมได้",
+                    "value": "```ชื่อ :\nอายุ :\nIGN(ชื่อในเกม) :\nCLAN :```"
+                }
+            ],
+            "footer": {
+                "text": "ปล. ในDiscord[PC] สามารถขึ้นบรรทัดใหม่ด้วยการกดปุ่ม Shift ค้าง + ปุ่ม Enter(จำเป็นต้องขึ้นบรรทัดใหม่)"
+            }
+        },
+        "already": {
+            "title": "Welcome back {{member.display_name}}!",
+            "fields": [
+                {
+                    "name": "ถ้าข้อมูลผิด สามารถติดต่อผู้ดูแล Server ได้",
+                    "value": "```ชื่อ : {{name}}\nอายุ : {{age}}\nIGN(ชื่อในเกม) : {{ign}}\nCLAN : {{clan}}```"
+                }
+            ],
+            "footer": {
+                "text": "ข้อมูลจากการแนะนำตัวในอดีต..."
+            }
         }
     },
     "loading": {

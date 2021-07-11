@@ -1,4 +1,4 @@
-import { Client } from 'discord.js'
+import { Client, MessageAttachment } from 'discord.js'
 import mongoose from 'mongoose'
 import 'dotenv/config'
 
