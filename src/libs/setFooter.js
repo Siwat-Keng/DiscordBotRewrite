@@ -1,6 +1,6 @@
 const warframeMarketFooter = ({ embed, guild }) => {
     embed.footer = {}
-    embed.footer.text = `${guild.name} Discord ${embed.rankMessage}`
+    embed.footer.text = `${guild.name} ${embed.rankMessage}`
     embed.guildName = guild.name
     return setIcon({ embed, guild })
 }

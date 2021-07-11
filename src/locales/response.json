@@ -65,7 +65,7 @@
         }
     },
     "loading": {
-        "message": "`Loading... Please wait...`"
+        "message": "`กรุณารอซักครู่...`"
     },
     "help": {
         "embed": {
