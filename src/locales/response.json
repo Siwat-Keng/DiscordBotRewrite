@@ -2,14 +2,40 @@
     "introduce": {
         "fail": {
             "embed": {
-                "title": "title e",
-                "description": "description e"
+                "title": "Hello {{author.tag}}",
+                "description": "แนะนำตัวใหม่ในห้อง {{intro_channel.name}} ตามรูปแบบที่กำหนดนะครับ",
+                "fields": [
+                    {
+                        "name": "สามารถ Copy ไปเติมได้",
+                        "value": "```ชื่อ :\nอายุ :\nIGN(ชื่อในเกม) :\nCLAN :```"
+                    }
+                ],
+                "footer": {
+                    "text": "ปล. ในDiscord[PC] สามารถขึ้นบรรทัดใหม่ด้วยการกดปุ่ม Shift ค้าง + ปุ่ม Enter(จำเป็นต้องขึ้นบรรทัดใหม่)"
+                }
             }
         },
         "success": {
             "embed": {
-                "title": "title s",
-                "description": "description s"
+                "title": "Welcome {{author.tag}}!",
+                "description": "แนะนำคำสั่งของ {{guild.me.displayName}}",
+                "fields": [
+                    {
+                        "name": "{{prefix}}price `item name`",
+                        "value": "บอทจะ search ราคา item ตามชื่อ (จาก Warframe Market)"
+                    },
+                    {
+                        "name": "{{prefix}}build `item name`",
+                        "value": "บอทจะ search build จาก overframe.gg"
+                    },
+                    {
+                        "name": "{{prefix}}member `discord name tag`",
+                        "value": "บอทจะ search profile ที่เคยนะนำตัวของ discord name tag นั้น ๆ"
+                    }
+                ],
+                "footer": {
+                    "text": "{{guild}}"
+                }
             }
         },
         "require": {
@@ -39,12 +65,29 @@
         }
     },
     "loading": {
-        "message": "`Loading...`"
+        "message": "`Loading... Please wait...`"
     },
     "help": {
         "embed": {
-            "title": "title help",
-            "description": "description help"
+            "title": "Hello {{author.tag}}!",
+            "description": "แนะนำคำสั่งของ {{guild.me.displayName}}",
+            "fields": [
+                {
+                    "name": "{{prefix}}price `item name`",
+                    "value": "บอทจะ search ราคา item ตามชื่อ (จาก Warframe Market)"
+                },
+                {
+                    "name": "{{prefix}}build `item name`",
+                    "value": "บอทจะ search build จาก overframe.gg"
+                },
+                {
+                    "name": "{{prefix}}member `discord name tag`",
+                    "value": "บอทจะ search profile ที่เคยนะนำตัวของ discord name tag นั้น ๆ"
+                }
+            ],
+            "footer": {
+                "text": "{{guild}}"
+            }
         }
     }
 }

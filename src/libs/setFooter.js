@@ -6,6 +6,7 @@ const warframeMarketFooter = ({ embed, guild }) => {
 }
 
 const setIcon = ({ embed, guild }) => {
+    if (!embed.footer) embed.footer = {}
     embed.footer.icon_url = `${guild.iconURL()}`
     return embed
 }

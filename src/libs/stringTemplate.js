@@ -7,7 +7,8 @@ const embedTemplateParser = (embed, valueObj) =>
 {
     embed.title = embed.title && stringTemplateParser(embed.title, valueObj)
     embed.description = embed.description && stringTemplateParser(embed.description, valueObj)
-    embed.footer.text = embed.footer?.text && stringTemplateParser(embed.footer.text, valueObj)
+    if (embed.footer)
+        embed.footer.text = embed.footer?.text && stringTemplateParser(embed.footer.text, valueObj)
     embed.fields = embed.fields?.map(field => 
         ({
             name: stringTemplateParser(field.name, valueObj),

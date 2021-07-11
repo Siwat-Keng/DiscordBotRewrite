@@ -8,6 +8,7 @@ import { checkSentence } from '../../libs/introduceCheck'
 import { warframeMarketFooter, setIcon } from '../../libs/setFooter'
 import { addWarframeMarketReaction, warframeMarketReaction } from '../../libs/handleReaction'
 import { memberEmbed } from '../../libs/buildEmbed'
+import { embedTemplateParser } from '../../libs/stringTemplate'
 
 import response from '../../locales/response.json'
 import reaction from '../../locales/reaction.json'
@@ -42,19 +43,46 @@ const introduceCheck = async message => {
             await message.member.roles.remove(waitingIntroRole)
         }
         await message.react(reaction.success)
-        await message.author.send({ embed: response.introduce.success.embed })
+        await message.author.send({ 
+            embed: setIcon({ embed: embedTemplateParser(response.introduce.success.embed , {
+                'author.tag': message.author.tag,
+                'guild.me.displayName': message.guild.me.displayName,
+                prefix: guildData.prefix,
+                guild: message.guild.name,
+            }),
+            guild: message.guild,
+            }),
+        })
     } else {
+        const guildData = await Guild.Model.findOne({ guild_id:message.guild.id }).lean()
+        const introChannel = await message.guild.client.channels.fetch(guildData.channels.intro_channel_id)
         await message.react(reaction.fail)
-        await message.author.send({ embed: response.introduce.fail.embed })
+        const embed = setIcon({
+            embed: embedTemplateParser(response.introduce.fail.embed, {
+                'author.tag': message.author.tag,
+                'intro_channel.name': introChannel.name,
+            }),
+            guild: message.guild,
+        })
+        await message.author.send({ embed })
         setTimeout(() => message.delete(), 30000)
     }
 }
 
-const help = message => message.author
-    .send({ embed: response.help.embed })
-    .catch(() => message.channel.send({ embed: response.help.embed }))
-    .finally(() => message.react(reaction.success))
-
+const help = async message => {
+    const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
+    const embed = setIcon({
+        embed: embedTemplateParser(response.help.embed, {
+            'author.tag': message.author.tag,
+            'guild.me.displayName': message.guild.me.displayName,
+            prefix: guildData.prefix,
+            guild: message.guild.name,
+        }), guild: message.guild })
+    message.author
+        .send({ embed })
+        .catch(() => message.channel.send({ embed }))
+        .finally(() => message.react(reaction.success))
+}
 
 const priceCheck = async message => {
     const guildData = await Guild.Model.findOne({ guild_id: message.guild.id }).lean()
