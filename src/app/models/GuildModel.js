@@ -52,11 +52,6 @@ const GuildSchema = new mongoose.Schema({
             default: false,
         },
     },
-    timezone: {
-        type: String,
-        default: process.env.DEFAULT_TIMEZONE,
-        require: true,
-    },
 })
 
 GuildSchema.index({ guild_id: 1 })
