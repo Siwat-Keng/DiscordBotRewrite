@@ -1,5 +1,6 @@
 import Member from '../models/MemberModel'
 import Guild from '../models/GuildModel'
+import Link from '../models/LinkModel'
 
 import { getPriceEmbed } from '../../services/warframeMarket'
 import { getBuildMessage } from '../../services/warframeBuild'
@@ -133,4 +134,13 @@ const getMember = async message => {
     await message.react(reaction.success)
 }
 
-module.exports = { introduceCheck, help, priceCheck, getBuild, getMember }
+const linkedMessage = async message => {
+    const linkedData = await Link.Model.findOne({ channel_id: message.channel.id }).lean()
+    const channels = await Promise.all(linkedData.linked_channels.map(channelID => message.guild.me.client.channels.fetch(channelID)))
+    const files = message.attachments.map(image => image.url)
+    channels.map(channel => channel.send(message.cleanContent, { 
+        embed: message.embed, 
+        files }))
+    await message.react(reaction.success)
+}
+module.exports = { introduceCheck, help, priceCheck, getBuild, getMember, linkedMessage }

@@ -9,6 +9,7 @@
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build-babel && cp -R src/locales build/",
     "dev": "nodemon --exec babel-node src/index.js",
+    "_dev": "nodemon --exec babel-node src/_index.js",
     "start": "node ./build/index.js"
   },
   "keywords": [],
@@ -29,7 +30,7 @@
   "dependencies": {
     "discord.js": "12.5.*",
     "dotenv": "10.0.*",
-    "luxon": "1.27.*",
+    "luxon": "2.0.*",
     "mongoose": "5.12.*",
     "node-fetch": "2.6.*",
     "string-similarity": "4.0.*"

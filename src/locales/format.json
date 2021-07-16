@@ -22,5 +22,9 @@
       "guild",
       "กิลด์"
     ]
+  },
+  "notification": {
+    "helminth": "อย่าลืมไปดูบัพ Helminth หล่ะ",
+    "rivenSliver": "อย่าลืมไปแลก Riven Sliver กับ Palladino ที่ Iron Wake หล่ะ"
   }
 }

@@ -14,6 +14,9 @@ const GuildSchema = new mongoose.Schema({
         require: true,
     },
     channels: {
+        notify_channel_id: {
+            type: String,
+        },
         alert_channel_id: {
             type: String,
         },
@@ -23,13 +26,30 @@ const GuildSchema = new mongoose.Schema({
         command_channel_id: {
             type: String,
         },
+        share_channels: [String],
     },
     roles: {
         waiting_intro_id: {
             type: String,
         },
         member_id: {
-            type:String,
+            type: String,
+        },
+        helminth: {
+            type: String,
+        },
+        riven_sliver: {
+            type: String,
+        },
+    },
+    notifications: {
+        helminth: {
+            type: Boolean,
+            default: false,
+        },
+        riven_sliver: {
+            type: Boolean,
+            default: false,
         },
     },
     timezone: {
