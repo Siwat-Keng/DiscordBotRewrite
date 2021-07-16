@@ -1,4 +1,4 @@
-import { getTimeStamp } from '../libs/timer'
+import { DateTime } from 'luxon'
 import stringSimilarity from 'string-similarity'
 import wordListed from '../locales/format.json'
 
@@ -28,7 +28,7 @@ const splitSentence = (string) => {
 const checkSentence = (message) => {
     const userIntro = splitSentence(message.content)
     if (JSON.stringify(Object.keys(userIntro).sort()) === JSON.stringify(Object.keys(wordListed.introduceKeywords).sort())) 
-        return Object.assign( { author_id: message.author.id, timestamp: getTimeStamp('utc') }, userIntro )
+        return Object.assign( { author_id: message.author.id, timestamp: DateTime.local().ts }, userIntro )
     return false
 }
 
