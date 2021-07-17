@@ -9,11 +9,8 @@ const filterTime = string => {
 
 const buildArbitrationMessage = (arbitration) => {
     try {
-        let remainingTime = Math.round(
-            DateTime.fromISO(arbitration.activation)
-                .plus({ hours: 1 })
-                .diff(DateTime.local().setZone('UTC'), 'minutes').values.minutes,
-        )
+        let remainingTime = Math.round(DateTime.local().endOf('hour')
+            .diff(DateTime.local(), 'minutes').values.minutes)
         if (!remainingTime) remainingTime = '<1'
         const message =
       '**Arbitration**\n```• ' +

@@ -33,6 +33,8 @@ const cycleMessage = async client => {
                     await Cache.Model({ guild_id: guild.guild_id, alert_message_id: newMessage.id }).save()
                 }
             } else {
+                const messages = await channel.messages.fetch()
+                messages.map(async msg => await msg.delete())
                 const newMessage = await channel.send({ embed: embedObject })
                 await Cache.Model({ guild_id: guild.guild_id, alert_message_id: newMessage.id }).save()
             }
