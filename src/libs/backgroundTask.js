@@ -59,8 +59,8 @@ const notification = async client => {
             const helminthRole = await notifyChannel.guild.roles.fetch(guild.roles.helminth)
             setTimeout(notifyHelminth, notifyTimeout.helminthTimeout, notifyChannel, helminthRole)
         }
-        if (guild.notifications?.riven_sliver) {
-            const rivenSliverRole = await notifyChannel.guild.roles.fetch(guild.roles.helminth)
+        if (guild.notifications?.riven_sliver && guild.roles?.riven_sliver) {
+            const rivenSliverRole = await notifyChannel.guild.roles.fetch(guild.roles.riven_sliver)
             setTimeout(notifyRivenSliver, notifyTimeout.rivenSliverTimeout, notifyChannel, rivenSliverRole)
         }
     })
