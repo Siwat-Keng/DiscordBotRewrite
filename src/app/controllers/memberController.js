@@ -6,6 +6,11 @@ import { embedTemplateParser } from '../../libs/stringTemplate'
 import response from '../../locales/response.json'
 
 const memberJoin = async member => {
+    if (member.user.bot && member !== member.guild.me) return member.guild.owner.send({
+        embed: embedTemplateParser(response.bot_join, {
+            'member.displayName': member.displayName,
+            'guild.name': member.guild.name,
+        })}).catch(err => console.log(err))
     const guildData = await Guild.Model.findOne({ guild_id: member.guild.id }).lean()
     const memberData = await Member.Model.findOne( { guild_id: member.guild.id, member_id: member.id }).lean()
     if (guildData.channels?.intro_channel_id && !memberData) {

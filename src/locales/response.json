@@ -89,5 +89,9 @@
                 "text": "{{guild}}"
             }
         }
+    },
+    "bot_join": {
+        "title": "มีบอทเข้ามาใน {{guild.name}}",
+        "description": "{{member.displayName}} เข้ามาในเซิฟเวอร์"
     }
 }
