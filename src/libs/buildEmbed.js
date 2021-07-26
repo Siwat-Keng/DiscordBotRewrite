@@ -8,4 +8,21 @@ const memberEmbed = member => ({
     },
 })
 
-module.exports = { memberEmbed }
+const messageLinkEmbed = message => ({
+    author: {
+        name: message.author.tag,
+        icon_url: message.author.displayAvatarURL(),
+    },
+    description: message.cleanContent,
+    image: {
+        url: message.attachments?.first()?.url,
+    },
+    footer: {
+        text: `${message.guild.name} [Server]`,
+        icon_url: message.guild.iconURL(),
+    },
+    timestamp: new Date(),
+    color: 0x6495ed,
+})
+
+module.exports = { memberEmbed, messageLinkEmbed }

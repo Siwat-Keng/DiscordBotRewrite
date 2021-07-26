@@ -8,7 +8,7 @@ import { getBuildMessage } from '../../services/warframeBuild'
 import { checkSentence } from '../../libs/introduceCheck'
 import { warframeMarketFooter, setIcon } from '../../libs/setFooter'
 import { addWarframeMarketReaction, warframeMarketReaction } from '../../libs/handleReaction'
-import { memberEmbed } from '../../libs/buildEmbed'
+import { memberEmbed, messageLinkEmbed } from '../../libs/buildEmbed'
 import { embedTemplateParser } from '../../libs/stringTemplate'
 
 import response from '../../locales/response.json'
@@ -137,10 +137,8 @@ const getMember = async message => {
 const linkedMessage = async message => {
     const linkedData = await Link.Model.findOne({ channel_id: message.channel.id }).lean()
     const channels = await Promise.all(linkedData.linked_channels.map(channelID => message.guild.me.client.channels.fetch(channelID)))
-    const files = message.attachments.map(image => image.url)
-    channels.map(channel => channel.send(message.cleanContent, { 
-        embed: message.embed, 
-        files }))
+    const embed = messageLinkEmbed(message)
+    channels.map(channel => channel.send({ embed }))
     await message.react(reaction.success)
 }
 module.exports = { introduceCheck, help, priceCheck, getBuild, getMember, linkedMessage }
